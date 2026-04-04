@@ -1,12 +1,30 @@
-import { test, expect } from '@playwright/test';
+import { Page } from '@playwright/test';
 
+export class LeagueConfigure {
+  constructor(private page: Page) {}
 
-test('Configure League', async ({ page }) => {
-await page.getByText('NFL').click();
-await page.getByRole('button', { name: 'Clear' }).click();
+  async goto() {
+    await this.page.goto('/nfl/reports');
+  }
 
-const regularSection = page.locator('div:has-text("Regular")');
+  async selectLeague(league: string) {
+    await this.page.locator('.kyber-filter-dropdown__toggle-text', { hasText: league }).click();
+  }
 
-await regularSection.getByRole('button', { name: '1' }).click();
-await regularSection.getByRole('button', { name: '2' }).click();
-});
+  async clearSelection() {
+    await this.page.getByRole('button', { name: 'Clear' }).click();
+  }
+
+  async openSeasonWeeksDropdown() {
+    await this.page.locator('.kyber-filter-dropdown__toggle-text', { hasText: 'Select..' }).click();
+  }
+
+  async configureRegularWeeks(weeks: string[]) {
+    const regularSection = this.page.locator('.kyber-dropdown-weeks-segment').filter({
+      has: this.page.locator('[aria-label="Check All Regular"]'),
+    });
+    for (const week of weeks) {
+      await regularSection.locator('.kyber-filter-strip__option').filter({ hasText: new RegExp(`^${week}$`) }).click();
+    }
+  }
+}
