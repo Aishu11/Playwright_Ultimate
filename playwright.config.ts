@@ -7,14 +7,22 @@ export default defineConfig({
   reporter: 'list',
   use: {
     baseURL: 'https://ultimate.pffstaging.com',
-    headless: false,        // watch the browser run
+    headless: false,
     screenshot: 'only-on-failure',
     video: 'retain-on-failure',
   },
   projects: [
     {
+      name: 'setup',
+      testMatch: 'auth.setup.ts',
+    },
+    {
       name: 'chromium',
-      use: { ...devices['Desktop Chrome'] },
+      use: {
+        ...devices['Desktop Chrome'],
+        storageState: 'utils/storageState.json',
+      },
+      dependencies: ['setup'],
     },
   ],
 });
