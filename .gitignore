@@ -1,3 +1,5 @@
 node_modules/
 test-results/
 homepage.png
+.env
+utils/storageState.json

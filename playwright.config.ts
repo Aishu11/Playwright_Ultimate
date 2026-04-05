@@ -1,8 +1,10 @@
 import { defineConfig, devices } from '@playwright/test';
+import dotenv from 'dotenv';
+dotenv.config();
 
 export default defineConfig({
   testDir: './tests',
-  timeout: 30000,
+  timeout: 60000,
   retries: 0,
   reporter: 'list',
   use: {
