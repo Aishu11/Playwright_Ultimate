@@ -3,3 +3,7 @@ test-results/
 homepage.png
 .env
 utils/storageState.json
+.mcp.json
+.claude/
+.playwright-mcp/
+*.png
